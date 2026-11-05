@@ -618,11 +618,7 @@ const LIB=[
 {id:'o-recon',tr:'a',onc:1,cat:'Before & after treatment',ev:'Technique · Microvascular reconstruction',
  head:"Reconstruction is not closure. It is function.",
  take:"A free flap is living tissue moved with its artery and vein and joined to neck vessels under the microscope. It lets the surgeon take the margin the cancer needs. Radial forearm skin keeps a rebuilt tongue mobile; fibula bone rebuilds the jaw and later accepts implants. Average free flap success is about 95%. But every one of these operations exists because a lesion was not biopsied at one centimetre.",
- rib:"Free flaps restore speech, swallowing and the jaw",more:"Discuss a case",u:"https://wa.me/917238868584",likes:0},
-{id:'o-author',tr:'a',onc:1,author:1,cat:'About OralWatch',ev:'Oral Oncosurgeon & Microvascular Reconstruction Surgeon',img:'img/dr-tiwari.jpg',alt:'Dr Manish S. Tiwari',
- head:"OralWatch is made by Dr Manish S. Tiwari",
- take:"Dr Manish S. Tiwari is an oral oncosurgeon and microvascular reconstruction surgeon: MDS in Oral & Maxillofacial Surgery, Fellowship in Head & Neck Oncology at Tata Cancer Centre, and Fellowship in Oral Oncology & Microvascular Reconstruction (AOMSI). He operates in Kolkata, Mumbai, Prayagraj and Karnal. Noticed something unusual in a patient's mouth? Discuss it with him on WhatsApp, free.",
- rib:"Know your doctor: tap to read more",more:"Read more",u:"#about",prof:1,likes:0}
+ rib:"Free flaps restore speech, swallowing and the jaw",more:"Discuss a case",u:"https://wa.me/917238868584",likes:0}
 ];
 
 const CHAR_FOR={'Periodontics':'tooth','Endodontics':'tooth','Orthodontics':'tooth','Prosthodontics':'tooth','Implants':'tooth','Oral surgery':'tooth','Paediatric dentistry':'tooth','Practice & policy':'doc','Premalignancy':'lens','Biopsy':'lens','Before & after treatment':'bone','Normal variants':'tongue','Early detection':'lens','Genetics simplified':'dna','Tongue cancer':'tongue','Buccal cancer':'blob','Neck':'node','Immunotherapy':'vial','Systemic therapy':'vial','Adjuvant therapy':'vial','Anastomosis':'vessel','Flap failure':'flap','Flap monitoring':'flap','ALT flap':'flap','Radial forearm flap':'flap','Pectoralis major flap':'flap','Fibula flap':'bone','Scapula flap':'bone','Mandible':'bone','Dental rehab':'bone','Osteoradionecrosis':'bone','Maxillectomy':'bone','Oncology news':'lens','HPV and oropharynx':'tumour','Margins':'tongue','ITF clearance':'tumour','Vessel-depleted neck':'vessel','Postoperative care':'blob'};
@@ -813,7 +809,7 @@ function feedList(){
 function nextDrop(){const off=5.5*3600e3,ist=Date.now()+off,d=new Date(ist),h=d.getUTCHours(),t=new Date(ist);t.setUTCHours(h-h%4,6,0,0);if(t.getTime()<=ist)t.setUTCHours(h-h%4+4,6,0,0);const ms=t.getTime()-ist,hh=Math.floor(ms/3600e3),mm=Math.floor(ms%3600e3/60e3);return hh?`${hh} h ${mm} min`:`${mm} min`;}
 const CAT_ORDER=['Early detection','Premalignancy','Biopsy','Normal variants','Before & after treatment','Periodontics','Endodontics','Orthodontics','Prosthodontics','Implants','Oral surgery','Paediatric dentistry','Practice & policy','About OralWatch'];
 function renderChips(){
-  const all=[...liveCards,...LIB], n={};all.forEach(c=>n[c.cat]=(n[c.cat]||0)+1);
+  const all=tab==='onc'?LIB.filter(c=>c.onc):[...liveCards,...LIB], n={};all.forEach(c=>n[c.cat]=(n[c.cat]||0)+1);
   const cats=[...CAT_ORDER.filter(c=>n[c]),...Object.keys(n).filter(c=>!CAT_ORDER.includes(c)).sort()];
   $('chips').innerHTML=`<button class="chip" data-cat="" aria-pressed="${!topic}">All</button>`+cats.map(c=>`<button class="chip" data-cat="${esc(c)}" aria-pressed="${c===topic}">${esc(c)}</button>`).join('');
   const on=$('chips').querySelector('[aria-pressed="true"]');on&&on.scrollIntoView({inline:'center',block:'nearest'});
@@ -956,7 +952,7 @@ function topics(){
   const sh=openSheet(`<h3>Topics</h3><div class="grid"><button data-topic="" aria-pressed="${!topic}">All topics</button>${cats.map(c=>`<button data-topic="${esc(c)}" aria-pressed="${c===topic}">${esc(c)}</button>`).join('')}</div>`);
   sh.querySelector('.grid').onclick=e=>{const b=e.target.closest('[data-topic]');if(!b)return;topic=b.dataset.topic||null;tab='feed';closeSheet();render();};
 }
-$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;topic=b.dataset.cat||null;tab='feed';render();});
+$('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;topic=b.dataset.cat||null;if(tab!=='onc')tab='feed';render();});
 document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;tab=b.dataset.tab;render(tab==='feed');});
 $('pill').onclick=()=>{if(pendingLive>0)render();};
 $('nb-topics').onclick=searchSheet; $('nb-discuss').onclick=()=>{tab='onc';topic=null;render();}; $('nb-me').onclick=profile; $('nb-home').onclick=()=>{tab='feed';topic=null;render();};
