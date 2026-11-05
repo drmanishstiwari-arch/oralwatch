@@ -1436,7 +1436,7 @@ function discussSheet(from){
   T_('discuss-open-'+from); dzPh=[];
   const p=S.profile||{}, me=S.dzMe||{name:p.name||'',clinic:[p.institution,p.city].filter(Boolean).join(', '),phone:p.mobile||''};
   const sh=openSheet(`<h3>Discuss with Dr Manish</h3>
-   <div class="author"><img src="img/dr-tiwari.jpg" alt=""><div><p>Free opinion from Dr Manish S. Tiwari, oral oncosurgeon. Your case goes to his WhatsApp from your own phone; he replies on WhatsApp. OralWatch stores nothing.</p><button type="button" class="lnk rm-prof" data-prof="discuss">Read more about Dr Manish ›</button></div></div>
+   <div class="author"><img src="img/dr-tiwari.jpg" alt=""><div><p>Free opinion from Dr Manish S. Tiwari, oral oncosurgeon. Photos go privately to Dr Manish's own secure folder and the case opens in his WhatsApp from your phone. He replies on WhatsApp.</p><button type="button" class="lnk rm-prof" data-prof="discuss">Read more about Dr Manish ›</button></div></div>
    <form class="dz" id="dzf" novalidate>
     <span class="lg">Photos of the lesion (up to 3)</span><div class="phs" id="dzph"></div>
     <div class="dzsrc"><button type="button" class="btn coral" id="dzcam">📷 Take photo</button><button type="button" class="btn dzgal" id="dzgal">🖼 Choose from gallery</button></div>
