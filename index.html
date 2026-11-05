@@ -379,6 +379,9 @@ button:focus-visible,a:focus-visible{outline:2px solid #5B8CFF;outline-offset:2p
 .tabs{gap:14px}.tab{font-size:15.5px;max-width:none;overflow:visible}
 @media (max-width:440px){.pill{display:none}}
 .nb{padding:6px 12px}
+.ig-arrow.ig-up{left:auto;right:max(14px,env(safe-area-inset-right,0px));top:calc(8px + env(safe-area-inset-top,0px));bottom:auto;transform:none;animation:igu 1.2s ease-in-out infinite}
+.ig-arrow.ig-up svg{transform:rotate(180deg)}
+@keyframes igu{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .ocbar{flex:0 0 auto;display:flex;align-items:center;gap:14px;margin:0 12px 10px;padding:12px 14px 12px 16px;background:#F5E7E3;border:1.5px solid #E6C3BA;border-radius:20px;text-align:left;cursor:pointer;font-family:var(--f-body)}
 .ocbar[hidden]{display:none}
 .ocbar .oc-i{width:30px;height:30px;color:#B4472F;flex:0 0 auto}
@@ -1952,13 +1955,15 @@ function profile(){
    <h3>Appearance</h3>${seg('p-theme',[['system','Automatic'],['light','Light'],['dark','Dark']],S.theme)}${seg('p-ts',[['s','Small text'],['m','Medium'],['l','Large']],S.textSize)}
    <h3>Live papers and news</h3><p>${esc(liveStatus)} Your likes, saves and streak stay on this device.</p>
    <h3>Ideas for OralWatch?</h3><p>Suggest a topic or a change straight to the app's creator.</p><div class="grid"><button id="p-fb">Write to Dr Manish S. Tiwari</button></div>
-   <h3>Account</h3><div class="grid">${p?'<button id="p-edit">Edit profile</button>':''}<button id="iv-p">Invite a colleague</button><button id="rt-p">Rate OralWatch</button><button id="p-report">Report a problem</button><button id="unread">Mark all as unread</button><button id="replay">Replay intro</button>${isStandalone()?'':'<button id="p-a2hs">Add to home screen</button>'}<button id="p-del" class="danger">Delete my data</button></div>
+   <h3>Account</h3><div class="grid">${p?'<button id="p-edit">Edit profile</button><button id="p-out">Log out</button>':'<button id="p-in">Log in with mobile number</button>'}<button id="iv-p">Invite a colleague</button><button id="rt-p">Rate OralWatch</button><button id="p-report">Report a problem</button><button id="unread">Mark all as unread</button><button id="replay">Replay intro</button>${isStandalone()?'':'<button id="p-a2hs">Add to home screen</button>'}<button id="p-del" class="danger">Delete my data</button></div>
    ${isOwner?'<h3>Admin</h3><div class="grid"><button id="p-admin">Members and reports</button></div>':''}
    <h3>About</h3><div class="grid"><button data-legal="terms">Terms of use</button><button data-legal="privacy">Privacy policy</button><button data-legal="disclaimer">Medical disclaimer</button></div>
    <p style="font-size:12px">OralWatch is created and edited by Dr Manish S. Tiwari. © 2026 Dr Manish S. Tiwari. All rights reserved. Content is for professional education and does not replace clinical judgement.</p>`);
   const q=s=>sh.querySelector(s);
   q('#p-join')&&(q('#p-join').onclick=()=>{closeSheet();showReg(1);});
   q('#p-edit')&&(q('#p-edit').onclick=()=>{closeSheet();showReg(1,true);});
+  q('#p-in')&&(q('#p-in').onclick=()=>{closeSheet();showReturn();});
+  q('#p-out')&&(q('#p-out').onclick=()=>{S.profile=null;S.guest=false;persist();track('logout');closeSheet();toast('Logged out. Your reading history stays on this phone.');showWelcome();});
   q('#p-goal').onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;S.goal=+b.dataset.v;persist();syncSoon();updateGoal();profile();};
   q('#p-theme').onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;S.theme=b.dataset.v;persist();syncSoon();applyPrefs();profile();};
   q('#p-ts').onclick=e=>{const b=e.target.closest('[data-v]');if(!b)return;S.textSize=b.dataset.v;persist();syncSoon();applyPrefs();profile();};
@@ -2084,12 +2089,15 @@ function iosGuideHTML(){
    <p class="ig-small">Then follow the 3 steps shown in Safari.</p></div>`;
   return `<div class="ios-guide">
    <ol class="ig-steps">
-    <li><span class="ig-n">1</span><div>${iosOtherBrowser()?`Tap <b>Share</b> ${IC.share} in the address bar at the top.`:`Tap <b>Share</b> ${IC.share} at the bottom of Safari.<span class="ig-sub">On newer iPhones, tap ${IC.dots} first, then <b>Share</b>.</span>`}</div></li>
-    <li><span class="ig-n">2</span><div>Scroll down and tap <span class="ig-pill">${IC.plus} Add to Home Screen</span></div></li>
-    <li><span class="ig-n">3</span><div>Tap <span class="ig-pill ig-add">Add</span> at the top right. Done: OralWatch is on your home screen.</div></li>
+    <li><span class="ig-n">1</span><div>${iosOtherBrowser()?`Tap <b>Share</b> ${IC.share} at the top right, at the end of the address bar.`:`Tap <b>Share</b> ${IC.share} at the bottom of Safari.<span class="ig-sub">On newer iPhones, tap ${IC.dots} first, then <b>Share</b>.</span>`}</div></li>
+    ${iosOtherBrowser()?`<li><span class="ig-n">2</span><div>Tap <span class="ig-pill"><svg viewBox="0 0 24 24" class="ic"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> View More</span> at the end of the icon row.</div></li>
+    <li><span class="ig-n">3</span><div>Tap <span class="ig-pill">${IC.plus} Add to Home Screen</span></div></li>
+    <li><span class="ig-n">4</span><div>Tap <span class="ig-pill ig-add">Add</span> at the top right. Done: OralWatch is on your home screen.</div></li>`
+    :`<li><span class="ig-n">2</span><div>Scroll down and tap <span class="ig-pill">${IC.plus} Add to Home Screen</span></div></li>
+    <li><span class="ig-n">3</span><div>Tap <span class="ig-pill ig-add">Add</span> at the top right. Done: OralWatch is on your home screen.</div></li>`}
    </ol>
    <button class="ig-done" id="ig-done">I've added it</button></div>
-   <div class="ig-arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
+   <div class="ig-arrow${iosOtherBrowser()?' ig-up':''}" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v15M6 13l6 6 6-6" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>`;
 }
 function restoreToken(){
   const p=S.profile?{name:S.profile.name,role:S.profile.role,focus:S.profile.focus,country:S.profile.country,hcp:true,terms:true,termsVersion:S.profile.termsVersion,consentAt:S.profile.consentAt,joinedAt:S.profile.joinedAt,restored:true}:null;
