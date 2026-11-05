@@ -1379,13 +1379,26 @@ const QUIZ=[{"img": "img/q-linea-alba.jpg", "q": "34-year-old woman, no tobacco,
 const WA_NO='917238868584', WA_SHOW='+91 72388 68584';
 /* Case photo upload: Google Apps Script web app owned by Dr Tiwari (saves photos to his private Drive and logs the case in a Google Sheet). Empty = off. */
 const DZ_UPLOAD='https://script.google.com/macros/s/AKfycbxe7PpWhzddJnNYjcITSDEboIANoAKJnqmPfyY14PF41etY3trtXkYPna_YrNAVB0I/exec';
-function dzOpenWA(text){
-  const sh=openSheet(`<h3>Photos received ✓</h3><p>WhatsApp is opening with your case and photo link already written to Dr Manish (${WA_SHOW}). Just tap <b>Send</b>. You do not need his number saved.</p>
-   <a class="btn wa" href="${waLink(text)}" target="_blank" rel="noopener">Open WhatsApp again</a>
-   <div class="dz"><div class="pre">${esc(text)}</div></div>`);
-  setTimeout(()=>{location.href=waLink(text);},300);
-}
 const waLink=t=>'https://wa.me/'+WA_NO+'?text='+encodeURIComponent(t);
+/* Opens the chat with Dr Manish in the sender's personal WhatsApp, skipping the wa.me page (which asks "Continue to chat" and may offer WhatsApp Business). */
+function waDirect(t){
+  const ua=navigator.userAgent, q='phone='+WA_NO+'&text='+encodeURIComponent(t);
+  if(/Android/i.test(ua)) return 'intent://send/?'+q+'#Intent;scheme=whatsapp;package=com.whatsapp;S.browser_fallback_url='+encodeURIComponent(waLink(t))+';end';
+  if(/iPhone|iPad|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)) return 'whatsapp://send?'+q;
+  return waLink(t);
+}
+function waGo(t){
+  const u=waDirect(t); location.href=u;
+  if(u.startsWith('whatsapp:')) setTimeout(()=>{if(document.visibilityState==='visible'&&!document.hidden)location.href=waLink(t);},1800);
+}
+function dzOpenWA(text,auto){
+  const sh=openSheet(`<h3>Photos received ✓</h3><p>Your case, photo link and your details are written in a message to Dr Manish. In WhatsApp, just tap <b>Send ➤</b>.</p>
+   <button class="btn wa" id="dz-go" style="width:100%;font-size:17px;padding:16px">Open WhatsApp: chat with Dr Manish</button>
+   <p style="font-size:12.5px;color:var(--muted);margin-top:8px">Opens in your own WhatsApp, straight into his chat (${WA_SHOW}). His number does not need to be saved.</p>
+   <div class="dz"><div class="pre">${esc(text)}</div></div>`);
+  sh.querySelector('#dz-go').onclick=()=>{T_('discuss-wa-tap');waGo(text);};
+  if(auto) waGo(text);
+}
 function quizFor(j){
   const done=S.quiz||{}, d=tipDay(), order=QUIZ.map((_,i)=>(d*5+i)%QUIZ.length);
   const fresh=order.filter(i=>!(i in done));
@@ -1434,10 +1447,14 @@ function dzSel(id,arr,v){return `<select id="${id}"><option value="">Choose</opt
 function dzChk(n,arr){return `<div class="ck">${arr.map(a=>`<label><input type="checkbox" name="${n}" value="${esc(a)}">${esc(a)}</label>`).join('')}</div>`;}
 function discussSheet(from){
   T_('discuss-open-'+from); dzPh=[];
-  const p=S.profile||{}, me=S.dzMe||{name:p.name||'',clinic:[p.institution,p.city].filter(Boolean).join(', '),phone:p.mobile||''};
+  const p=S.profile||{}, d0=S.dzMe||{}, me={name:d0.name||p.name||'',clinic:d0.clinic||p.institution||'',city:d0.city||p.city||'',phone:d0.phone||p.mobile||''}, asked=S.dzMe&&('opmd' in S.dzMe);
   const sh=openSheet(`<h3>Discuss with Dr Manish</h3>
    <div class="author"><img src="img/dr-tiwari.jpg" alt=""><div><p>Free opinion from Dr Manish S. Tiwari, oral oncosurgeon. Photos go privately to Dr Manish's own secure folder and the case opens in his WhatsApp from your phone. He replies on WhatsApp.</p><button type="button" class="lnk rm-prof" data-prof="discuss">Read more about Dr Manish ›</button></div></div>
    <form class="dz" id="dzf" novalidate>
+    <span class="lg">Your details <span style="font-weight:500;color:var(--muted)">(remembered for next time)</span></span>
+    <label for="dz-nm">Your name</label><input id="dz-nm" autocomplete="name" placeholder="Dr ..." value="${esc(me.name||'')}">
+    <div class="two"><div><label for="dz-cl">Clinic / hospital</label><input id="dz-cl" autocomplete="organization" value="${esc(me.clinic||'')}"></div><div><label for="dz-ct">City</label><input id="dz-ct" autocomplete="address-level2" value="${esc(me.city||'')}"></div></div>
+    <label for="dz-mb">Your mobile</label><input id="dz-mb" type="tel" inputmode="tel" autocomplete="tel" value="${esc(me.phone||'')}">
     <span class="lg">Photos of the lesion (up to 3)</span><div class="phs" id="dzph"></div>
     <div class="dzsrc"><button type="button" class="btn coral" id="dzcam">📷 Take photo</button><button type="button" class="btn dzgal" id="dzgal">🖼 Choose from gallery</button></div>
     <input type="file" id="dzin" accept="image/*" capture="environment" hidden>
@@ -1449,7 +1466,7 @@ function discussSheet(from){
     <span class="lg">Habits</span>${dzChk('dzh',DZ.hab)}
     <span class="lg">What you see</span>${dzChk('dzf',DZ.fnd)}
     <label for="dz-note">Your question or treatment so far</label><textarea id="dz-note" placeholder="e.g. Not healed 3 weeks after smoothing the cusp"></textarea>
-    ${S.dzMe?'':`<h3 style="margin-top:6px">Two quick questions <span style="font-weight:500;color:var(--muted)">(optional, asked once)</span></h3>
+    ${asked?'':`<h3 style="margin-top:6px">Two quick questions <span style="font-weight:500;color:var(--muted)">(optional, asked once)</span></h3>
     <label for="dz-opmd">White/red patches or submucous fibrosis you see in a month</label>${dzSel('dz-opmd',DZ.opmd)}
     <label for="dz-ca">Suspected oral cancers you saw in the last year</label>${dzSel('dz-ca',DZ.ca)}`}
     <label class="chk" style="color:var(--ink)"><input type="checkbox" id="dz-ok"> The patient agreed to share these photos for a specialist opinion. I have not included the patient's name.</label>
@@ -1469,22 +1486,24 @@ function discussSheet(from){
   sh.querySelector('#dzf').onsubmit=async e=>{e.preventDefault();
     const v=id=>(sh.querySelector('#'+id)?.value||'').trim(), list=n=>[...sh.querySelectorAll(`input[name="${n}"]:checked`)].map(i=>i.value).join(', ')||'Not given';
     const er=sh.querySelector('#dz-err'), fail=m=>{er.textContent=m;er.hidden=false;er.scrollIntoView({block:'center'});};
-    const mine={opmd:v('dz-opmd')||(S.dzMe||{}).opmd||'',ca:v('dz-ca')||(S.dzMe||{}).ca||''};
+    const mine={opmd:v('dz-opmd')||(S.dzMe||{}).opmd||'',ca:v('dz-ca')||(S.dzMe||{}).ca||'',name:v('dz-nm'),clinic:v('dz-cl'),city:v('dz-ct'),phone:v('dz-mb')};
+    if(!mine.name)return fail('Add your name so Dr Manish knows who is asking.');
     if(!dzPh.length)return fail('Add at least one photo of the lesion.');
     if(!sh.querySelector('#dz-ok').checked)return fail("Confirm the patient's consent to share the photos.");
     S.dzMe=mine;persist();
-    const text=['OralWatch case: discussion with Dr Manish','',
-      `Patient: ${v('dz-age')||'?'} years, ${v('dz-sex')||'?'}`,`Site: ${v('dz-site')||'Not given'}`,`Duration: ${v('dz-dur')||'Not given'}`,`Habits: ${list('dzh')}`,`Findings: ${list('dzf')}`]
+    const text=['Hello Dr Manish, I would like your opinion on this case (sent from OralWatch).','',
+      `From: ${/^dr\.?\s/i.test(mine.name)?mine.name:'Dr '+mine.name}`].concat(mine.clinic||mine.city?[`Clinic: ${[mine.clinic,mine.city].filter(Boolean).join(', ')}`]:[]).concat(mine.phone?[`Mobile: ${mine.phone}`]:[]).concat(['',
+      `Patient: ${v('dz-age')||'?'} years, ${v('dz-sex')||'?'}`,`Site: ${v('dz-site')||'Not given'}`,`Duration: ${v('dz-dur')||'Not given'}`,`Habits: ${list('dzh')}`,`Findings: ${list('dzf')}`])
       .concat(v('dz-note')?[`Note: ${v('dz-note')}`]:[]).concat([`Photos: ${dzPh.length}`,'Patient consent: Yes','',...(mine.opmd||mine.ca?[`(My practice: patches/OSMF per month ${mine.opmd||'-'}; suspected cancers last year ${mine.ca||'-'})`]:[])]).join('\n');
     if(DZ_UPLOAD){
-      const btn=sh.querySelector('#dzf button[type=submit]');btn.disabled=true;btn.textContent='Sending photos securely…';
+      const t0=Date.now(), btn=sh.querySelector('#dzf button[type=submit]');btn.disabled=true;btn.textContent='Sending photos securely…';
       try{
         const photos=await Promise.all(dzPh.map(f=>new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]);r.onerror=rej;r.readAsDataURL(f);})));
         const pr=S.profile||{};
-        const resp=await fetch(DZ_UPLOAD,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({photos,age:v('dz-age'),sex:v('dz-sex'),site:v('dz-site'),dur:v('dz-dur'),hab:list('dzh'),fnd:list('dzf'),note:v('dz-note'),opmd:mine.opmd,ca:mine.ca,name:pr.name||'',mobile:pr.mobile||'',city:pr.city||'',vid:S.vid||''})});
+        const resp=await fetch(DZ_UPLOAD,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({photos,age:v('dz-age'),sex:v('dz-sex'),site:v('dz-site'),dur:v('dz-dur'),hab:list('dzh'),fnd:list('dzf'),note:v('dz-note'),opmd:mine.opmd,ca:mine.ca,name:mine.name,mobile:mine.phone||pr.mobile||'',city:[mine.clinic,mine.city].filter(Boolean).join(', '),vid:S.vid||''})});
         const j=await resp.json(); if(!j||!j.ok||!j.url)throw 0;
-        const full=text.replace(`Photos: ${dzPh.length}`,`Photos (${dzPh.length}): ${j.url}`)+`\nCase ID: ${j.id}`;
-        T_('discuss-send-upload'); dzOpenWA(full); return;
+        const full=text.replace(`Photos: ${dzPh.length}`,`Photos (${dzPh.length}): ${j.url}\nCase ID: ${j.id}`).trim();
+        T_('discuss-send-upload'); dzOpenWA(full,Date.now()-t0<4500); return;
       }catch(err){btn.disabled=false;btn.textContent='Send to Dr Manish on WhatsApp';}
     }
     let shared=false;
@@ -1497,12 +1516,12 @@ function dzSent(text,shared){
   const sh=openSheet(`<h3>${shared?'Check it reached Dr Manish':'One more step: attach the photos'}</h3>
    <p>${shared?"If you picked Dr Manish's chat in WhatsApp, you're done. If his number wasn't in your contacts, open his chat below and send the photos there.":"Open Dr Manish's chat below (the case details are already filled in), then attach the photos from your gallery."}</p>
    <div class="grid"><button id="dz-cp">Copy number ${WA_SHOW}</button>${shared?'':'<button id="dz-save">Save photos to phone</button>'}</div>
-   <a class="btn wa" href="${waLink(text)}" target="_blank" rel="noopener">Open Dr Manish's WhatsApp chat</a>
+   <a class="btn wa" href="${waDirect(text)}">Open Dr Manish's WhatsApp chat</a>
    <div class="dz"><div class="pre">${esc(text)}</div></div>`);
   sh.querySelector('#dz-cp').onclick=()=>copyText(WA_SHOW);
   const sv=sh.querySelector('#dz-save'); if(sv) sv.onclick=()=>dzPh.forEach(f=>{const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name||'oralwatch-case.jpg';document.body.appendChild(a);a.click();a.remove();});
 }
-function dzShrink(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const m=1600,k=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(new File([b],'oralwatch-case-'+Date.now()+'.jpg',{type:'image/jpeg'})):rej(),'image/jpeg',.85);URL.revokeObjectURL(u);};img.onerror=rej;img.src=u;});}
+function dzShrink(file){return new Promise((res,rej)=>{const img=new Image(),u=URL.createObjectURL(file);img.onload=()=>{const m=1400,k=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*k);c.height=Math.round(img.height*k);c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>b?res(new File([b],'oralwatch-case-'+Date.now()+'.jpg',{type:'image/jpeg'})):rej(),'image/jpeg',.85);URL.revokeObjectURL(u);};img.onerror=rej;img.src=u;});}
 
 /* ---------- Know your doctor: profile page ---------- */
 function profPage(from){
