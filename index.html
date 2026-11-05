@@ -847,7 +847,7 @@ let io, seenTimer={};
 /* Cards are rendered in batches as you swipe, not all at once: with 250+ cards the full feed froze phones after the intro. */
 const BATCH=20, OLD_KEEP=20;
 let items=[], itemPos=0, doneN=0;
-function itemHTML(it){if(it.k==='invite')return inviteHTML();if(it.k==='quiz')return quizHTML(it.q);if(it.k==='discuss')return discussCardHTML();return it.k==='card'?cardHTML(it.c):it.k==='tip'?tipHTML(it.t):it.k==='note'?noteHTML():joinHTML();}
+function itemHTML(it){if(it.k==='invite')return inviteHTML();if(it.k==='quiz')return quizHTML(it.q);if(it.k==='discuss')return discussCardHTML();if(it.k==='cde')return cdeHTML();return it.k==='card'?cardHTML(it.c):it.k==='tip'?tipHTML(it.t):it.k==='note'?noteHTML():joinHTML();}
 function renderMore(n=BATCH){
   if(itemPos>=items.length)return false;
   const chunk=items.slice(itemPos,itemPos+n); itemPos+=chunk.length;
@@ -885,6 +885,7 @@ function render(scrollToFresh=true){
       const tp=tipsForFeed(at.length); for(let j=at.length-1;j>=0;j--) fh.splice(at[j],0,j%2?{k:'quiz',q:quizFor(j)}:{k:'tip',t:tp[j>>1]});
     }
     if(noteDue()&&fh.length>13) fh.splice(12,0,{k:'note'});
+    if(cdeDue()&&fh.length>12) fh.splice(11,0,{k:'cde'});
     addInvites(fh);
     olderPool=old.slice().reverse(); // already-seen cards, most recent first: loaded on pull-down or from the caught-up card
     items=fh;
@@ -924,6 +925,7 @@ function observe(){
       const cards=feed.children; if(itemPos<items.length&&[...cards].indexOf(el)>=cards.length-6) renderMore();
     }
     if(e.isIntersecting&&el.id==='note-card') noteShown();
+    if(e.isIntersecting&&el.id==='cde-card') cdeShown();
     if(!id)return;
     if(e.isIntersecting){seenTimer[id]=setTimeout(()=>{if(!S.seen.includes(id)){S.seen.push(id);persist();updatePill();onSeen();setTimeout(maybeRate,1500);}},800);}
     else clearTimeout(seenTimer[id]);
@@ -1481,7 +1483,7 @@ function dzShrink(file){return new Promise((res,rej)=>{const img=new Image(),u=U
 function profPage(from){
   T_('profile-open-'+from);
   const o=document.createElement('div');o.className='drp';o.id='drp';o.setAttribute('role','dialog');o.setAttribute('aria-label','About Dr Manish S. Tiwari');
-  const tl=[['2007–12','BDS','YCMM & RDF Dental College, Ahmednagar'],['2013–16','MDS, Oral & Maxillofacial Surgery','SDK Dental College, Nagpur · 3rd rank, MUHS 2016'],['2016–17','Head & neck oncology training','Mazumdar Shaw Cancer Centre, Bangalore, under Dr Moni Abraham Kuriakose'],['2017','Head & neck oncology training','Prince Aly Khan Hospital, Mumbai, under Dr Sultan Pradhan'],['2017–19','Fellowship in Oral Oncology & Microvascular Reconstruction (AOMSI)','Park Clinic, Kolkata, under Dr Saidul Islam'],['2022','Fellowship in Head & Neck Oncology','Tata Memorial Centre (HBCC / MPMMCC), Varanasi']];
+  const tl=[['2007–12','BDS','YCMM & RDF Dental College, Ahmednagar'],['2013–16','MDS, Oral & Maxillofacial Surgery','SDK Dental College, Nagpur'],['2016–17','Head & neck oncology training','Mazumdar Shaw Cancer Centre, Bangalore, under Dr Moni Abraham Kuriakose'],['2017','Head & neck oncology training','Prince Aly Khan Hospital, Mumbai, under Dr Sultan Pradhan'],['2017–19','Fellowship in Oral Oncology & Microvascular Reconstruction (AOMSI)','Park Clinic, Kolkata, under Dr Saidul Islam'],['2022','Fellowship in Head & Neck Oncology','Tata Memorial Centre (HBCC / MPMMCC), Varanasi']];
   const pubs=[['Status and determinants of early detection of oral premalignant and malignant lesions in India','Cancer Control 2023','https://doi.org/10.1177/10732748231159556'],['Titanium lag screw versus miniplate fixation in anterior mandibular fractures','J Oral Maxillofac Surg 2019','https://doi.org/10.1016/j.joms.2019.01.001'],['Surgical complications in oral cancers: potential risk factors and clinical considerations','J Maxillofac Oral Surg 2018','https://doi.org/10.1007/s12663-018-1144-x'],['Superiorly based platysma myocutaneous flap for intraoral defects','Oral Maxillofac Surg 2018','https://doi.org/10.1007/s10006-017-0665-7'],['Managing mandibular fractures under regional anaesthesia','J Korean Assoc Oral Maxillofac Surg 2018','https://doi.org/10.5125/jkaoms.2018.44.6.275']];
   const W=[['W','Wide excision with clear margins','Cancer surgery planned to take what the tumour needs'],['A','Advanced microvascular reconstruction','Free fibula, radial forearm and ALT flaps that restore speech, swallowing and the jaw'],['T','Tumour board decisions','Evidence-based plans agreed with radiation and medical oncology'],['C','Catching it early','Screening, biopsy and OPMD follow-up with dentists'],['H','Habit cessation and long-term care','Follow-up, rehabilitation and returning patients to their dentist']];
   o.innerHTML=`<div class="drp-in">
@@ -1490,7 +1492,7 @@ function profPage(from){
     <div class="drp-kick">Know your doctor</div></header>
    <div class="drp-band"><h1>Dr Manish S. Tiwari</h1><p>Oral Oncosurgeon &amp; Microvascular Reconstruction Surgeon</p></div>
    <div class="drp-quals">MDS (Oral &amp; Maxillofacial Surgery) · Fellowship in Oral Oncology &amp; Microvascular Reconstruction (AOMSI) · Fellowship in Head &amp; Neck Oncology, Tata Memorial Centre</div>
-   <div class="drp-stats"><div><b>2017</b><span>in oral oncology since</span></div><div><b>10</b><span>published papers</span></div><div><b>3rd</b><span>rank, MDS (MUHS)</span></div><div><b>4</b><span>cities: Kolkata, Mumbai, Prayagraj, Karnal</span></div></div>
+   <div class="drp-stats"><div><b>1500+</b><span>oral cancer surgeries</span></div><div><b>160+</b><span>microvascular free flaps</span></div><div><b>10+</b><span>years in oral oncology</span></div><div><b>14</b><span>published papers</span></div></div>
    <section><h2>What we do, the <em>WATCH</em> way</h2><ul class="drp-ac">${W.map(([l,t,d])=>`<li><i>${l}</i><div><b>${t}</b><span>${d}</span></div></li>`).join('')}</ul></section>
    <div class="drp-pics"><img src="img/dr-ot.jpg" alt="Dr Tiwari in the operating theatre"><img src="img/dr-lecture.jpg" alt="Dr Tiwari lecturing at an AOMSI conference"></div>
    <section><h2>Training</h2><ol class="drp-tl">${tl.map(([y,t,d])=>`<li><span class="y">${y}</span><div><b>${t}</b><span>${d}</span></div></li>`).join('')}</ol></section>
@@ -1506,6 +1508,39 @@ function profPage(from){
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-prof]');if(b){e.preventDefault();closeSheet();profPage(b.dataset.prof);}});
 document.addEventListener('click',e=>{const r=e.target.closest('.card[data-id="o-author"] .ribbon, .card[data-id="o-author"] .img');if(r){e.preventDefault();profPage('card');}},true);
+
+/* ---------- CDE seminar invitation: an in-feed notification card, same rhythm as the note card (from one month after launch) ---------- */
+const CDE_FROM=Date.parse('2026-12-05T00:00:00+05:30');
+function cdeDue(){
+  const n=S.cde||{}; if(tab!=='feed'||Date.now()<CDE_FROM||n.sent||(n.n||0)>=6)return false;
+  const firstDay=Object.keys(S.days||{}).sort()[0]; if(!firstDay||firstDay===todayKey())return false;
+  return !n.at||Date.now()-n.at>4*864e5;
+}
+function cdeShown(){const n=S.cde||{};if(n.at&&Date.now()-n.at<864e5)return;S.cde={...n,n:(n.n||0)+1,at:Date.now()};persist();T_('cde-shown');}
+function cdeHTML(){
+  const nm=S.profile?.name?esc(String(S.profile.name).split(/\s+/).filter(w=>!/^dr\.?$/i.test(w))[0]||''):'';
+  return `<article class="card done note" id="cde-card"><div class="img">${sceneArt({scene:{bg:'mint',cap:['FREE CDE PROGRAMME','WITH DR MANISH S. TIWARI'],ch:[{k:'doc',m:'happy',x:.3},{k:'tooth',m:'happy',x:.72}]}})}</div>
+   <div class="ribbon"><b>Organise a free oral cancer CDE seminar with Dr Manish</b></div>
+   <div class="body"><h2>${nm?'Hello Dr '+nm+',':'Hello,'}</h2>
+   <p class="take">I would be glad to come to your IDA branch, study group or college for a free CDE on early detection of oral cancer, with a hands-on biopsy workshop. Tell me your city and a convenient month, and my team will fix a date.</p>
+   <p class="sign">Dr Manish S. Tiwari</p>
+   <div class="row"><button class="btn primary" data-cde="req">Request a CDE seminar</button><button class="btn ghost" data-cde="later">Not now</button></div></div></article>`;
+}
+async function cdeLog(){
+  if(!FEEDBACK.url)return;
+  const d=new URLSearchParams(),f=FEEDBACK.f,put=(x,v)=>{if(f[x])d.append(f[x],String(v??''));},p=S.profile||{};
+  put('kind','Other');put('msg','OralWatch: CDE seminar request');put('name',p.name||'Guest');put('mobile',p.mobile||'');put('role',p.role||'Guest');put('vid',S.vid||'');
+  try{await fetch(FEEDBACK.url,{method:'POST',mode:'no-cors',body:d});}catch(e){}
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-cde]'); if(!b)return;
+  if(b.dataset.cde==='req'){
+    S.cde={...(S.cde||{}),sent:Date.now()};persist();T_('cde-request');cdeLog();
+    const p=S.profile||{};
+    window.open('https://wa.me/917238868584?text='+encodeURIComponent(`Hello Dr Manish, I saw your invitation on OralWatch. We would like a free oral cancer CDE seminar with a biopsy workshop.\n\nName: ${p.name||''}\nIDA branch / group / college: \nCity: ${p.city||''}\nApprox. number of dentists: \nPreferred month: `),'_blank','noopener');
+  } else {S.cde={...(S.cde||{}),at:Date.now()};persist();T_('cde-later');}
+  const c=b.closest('#cde-card'); if(c){c.style.transition='opacity .3s';c.style.opacity='.4';}
+});
 
 /* ---------- boot ---------- */
 $('gdefs').insertAdjacentHTML('afterbegin',defsMarkup());
