@@ -1,0 +1,310 @@
+{
+ "updatedAt": "2026-11-05T04:00:00Z",
+ "count": 17,
+ "cards": [
+  {
+   "id": "38-sdf-arrested-half-of-severe-early-childhood-c",
+   "addedAt": "2026-11-05T04:00:00Z",
+   "cat": "Paediatric dentistry",
+   "ev": "Multicentre double-blind RCT · JAMA Pediatrics 2026",
+   "head": "38% SDF arrested half of severe early childhood caries",
+   "journal": "JAMA Pediatr",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "38% SDF arrested half of severe early childhood caries",
+   "take": "830 children aged 12–71 months with severe ECC; 38% silver diamine fluoride or placebo at baseline and 6 months. Lesion arrest at 3 months: 57.5% vs 18.8%. At 8 months: 50.2% vs 17.4%. Adverse events were no more common than with placebo (47.3% vs 43.3%). Bottom line: For a child who cannot sit for restorations, twice-yearly SDF is an evidence-based way to stop cavitated lesions. Warn parents about the black staining before you apply it.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/pediatrics-neonatology/news/38-percent-silver-diamine-fluoride-effectively-arrests-severe-early-childhood-caries-jama-177021",
+   "fig": {
+    "type": "bars",
+    "title": "Caries lesions arrested at 8 months",
+    "unit": "%",
+    "bars": [
+     {
+      "l": "38% SDF",
+      "v": 50.2,
+      "hi": 1
+     },
+     {
+      "l": "Placebo",
+      "v": 17.4
+     }
+    ],
+    "from": "JAMA Pediatrics 2026",
+    "ch": "tooth"
+   }
+  },
+  {
+   "id": "peri-implantitis-which-antibiotic-adjunct-works",
+   "addedAt": "2026-11-05T03:43:00Z",
+   "cat": "Implants",
+   "ev": "Systematic review and NMA · Periodontology 2000 2026",
+   "head": "Peri-implantitis: which antibiotic adjunct works best",
+   "journal": "Perio 2000",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Peri-implantitis: which antibiotic adjunct works best",
+   "take": "Network meta-analysis of 21 clinical studies (1,718 participants). With open-flap debridement, systemic metronidazole plus amoxicillin gave the best reduction in pocket depth and marginal bone loss. Without surgery, metronidazole alone was the best adjunct for attachment level and bone loss. Local antibiotics did less than systemic ones. Bottom line: Antibiotics support decontamination; they do not replace it. Effect sizes vary, so reserve them for confirmed peri-implantitis, not mucositis.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/metronidazole-and-amoxycillin-most-effective-antibiotic-regimens-for-peri-implantitis-suggests-study-168981"
+  },
+  {
+   "id": "calcium-silicate-sealer-healing-keeps-improving",
+   "addedAt": "2026-11-05T03:26:00Z",
+   "cat": "Endodontics",
+   "ev": "Retrospective cohort · Clinical Oral Investigations 2026",
+   "head": "Calcium silicate sealer: healing keeps improving to 5 years",
+   "journal": "Clin Oral Inv",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Calcium silicate sealer: healing keeps improving to 5 years",
+   "take": "637 teeth with symptomatic apical periodontitis, single operator, premixed calcium silicate sealer with cold hydraulic condensation. Strict success (no symptoms, full radiographic healing) rose from 80.2% at 1 year to 87.7% at 5 years. A larger lesion at baseline (higher PAI score) was the strongest predictor of incomplete healing. Sealer extrusion did not affect outcome. Bottom line: A lesion that is smaller but not gone at one year is often still healing. Keep reviewing before you plan a retreatment or surgery.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/hydraulic-calcium-silicatebased-sealers-exhibit-favorable-long-term-outcomes-in-apical-periodontitis-study-170764",
+   "fig": {
+    "type": "bars",
+    "title": "Strict periapical success",
+    "unit": "%",
+    "bars": [
+     {
+      "l": "1 year",
+      "v": 80.2
+     },
+     {
+      "l": "5 years",
+      "v": 87.7,
+      "hi": 1
+     }
+    ],
+    "from": "Clin Oral Investig 2026",
+    "ch": "tooth"
+   }
+  },
+  {
+   "id": "root-canals-work-as-well-in-autoimmune-disease",
+   "addedAt": "2026-11-05T03:09:00Z",
+   "cat": "Endodontics",
+   "ev": "Retrospective case-control · International Endodontic Journal 2026",
+   "head": "Root canals work as well in autoimmune disease",
+   "journal": "Int Endod J",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Root canals work as well in autoimmune disease",
+   "take": "203 patients with autoimmune disease (317 teeth) matched with 203 controls (312 teeth), followed for about four years. Success rates did not differ between groups. The inflammatory bowel disease subgroup did worse than rheumatoid arthritis or psoriasis. Tooth type, arch and a preoperative periapical lesion predicted outcome. Autoimmune disease did not. Bottom line: An autoimmune diagnosis is not a reason to choose extraction over endodontics. Local factors decide the prognosis.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/root-canal-treatment-outcomes-in-patients-with-autoimmune-disease-as-good-as-controls-suggests-study-170362"
+  },
+  {
+   "id": "endocrown-or-post-and-crown-for-a-root-treated-i",
+   "addedAt": "2026-11-05T02:52:00Z",
+   "cat": "Prosthodontics",
+   "ev": "In vitro study · The Open Dentistry Journal 2026",
+   "head": "Endocrown or post and crown for a root-treated incisor",
+   "journal": "Open Dent J",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Endocrown or post and crown for a root-treated incisor",
+   "take": "20 extracted maxillary central incisors loaded at 45° until failure. Fracture resistance did not differ significantly between the two designs. 80% of endocrown failures were repairable, compared with 60% for post-and-core. Bottom line: A lab study of 20 teeth, without thermal cycling or fatigue. The endocrown looks promising for anterior teeth, but clinical data are still needed.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/a-simpler-way-to-save-root-treated-front-teeth-new-study-puts-two-restoration-methods-head-to-head-172107"
+  },
+  {
+   "id": "loupes-cut-root-canal-time-and-errors",
+   "addedAt": "2026-11-05T02:35:00Z",
+   "cat": "Endodontics",
+   "ev": "Clinical trial · J Pharmacy & Bioallied Sciences Dec 2025",
+   "head": "Loupes cut root canal time and errors",
+   "journal": "JPBS",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Loupes cut root canal time and errors",
+   "take": "100 patients: root canal treatment with magnifying loupes or without. Treatment time was about 25% shorter with loupes. Procedural errors were significantly fewer (P < 0.05), and patients were more satisfied. Bottom line: Loupes are an inexpensive upgrade with a measurable effect. The trial is small and its randomisation is not described, so treat the size of the effect with caution.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/magnification-loupes-improve-accuracy-and-outcomes-in-root-canal-treatment-study-167028",
+   "fig": {
+    "type": "stat",
+    "big": "25%",
+    "lines": [
+     "shorter root canal treatment",
+     "with magnifying loupes"
+    ],
+    "from": "JPBS 2025",
+    "ch": "lens"
+   }
+  },
+  {
+   "id": "clear-aligners-are-kinder-to-the-gingiva",
+   "addedAt": "2026-11-05T02:18:00Z",
+   "cat": "Orthodontics",
+   "ev": "Systematic review · Clinical and Experimental Dental Research 2026",
+   "head": "Clear aligners are kinder to the gingiva",
+   "journal": "Clin Exp Dent",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Clear aligners are kinder to the gingiva",
+   "take": "Systematic review of 12 studies. From one month to one year, aligner patients had less plaque, less gingival inflammation and shallower pockets. S. mutans counts were consistently lower with aligners. Bottom line: For a patient with periodontal risk, aligners make hygiene easier, mainly because they come out. Fixed-appliance patients need closer hygiene review.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/clear-aligners-improve-oral-microbiological-and-periodontal-health-over-fixed-appliances-study-168020",
+   "fig": {
+    "type": "stat",
+    "big": "12",
+    "lines": [
+     "studies: less plaque and",
+     "inflammation with aligners"
+    ],
+    "from": "Clin Exp Dent Res 2026",
+    "ch": "tooth"
+   }
+  },
+  {
+   "id": "lipus-in-orthodontics-not-ready-for-routine-use",
+   "addedAt": "2026-11-05T02:01:00Z",
+   "cat": "Orthodontics",
+   "ev": "Systematic review and meta-analysis · BMC Oral Health 2026",
+   "head": "LIPUS in orthodontics: not ready for routine use",
+   "journal": "BMC Oral Hlt",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "LIPUS in orthodontics: not ready for routine use",
+   "take": "Meta-analysis of 11 studies of low-intensity pulsed ultrasound. Pain at 24 hours: no significant difference from controls (MD −0.76; 95% CI −2.86 to 1.33). Results on faster tooth movement ranged from substantial to negligible. Bottom line: Do not sell LIPUS to patients as faster or painless treatment yet. Standardised RCTs are needed.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/insufficient-evidence-for-routine-use-of-lipus-in-orthodontics-study-165320"
+  },
+  {
+   "id": "severe-periodontitis-tracks-with-diabetic-retina",
+   "addedAt": "2026-11-05T01:44:00Z",
+   "cat": "Periodontics",
+   "ev": "Cross-sectional clinical study · Diagnostics 2026",
+   "head": "Severe periodontitis tracks with diabetic retinal change",
+   "journal": "Diagnostics",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Severe periodontitis tracks with diabetic retinal change",
+   "take": "100 participants, from healthy controls to proliferative diabetic retinopathy, examined with OCT and OCT-angiography. Stage III–IV periodontitis was associated with thinner retinal nerve fibre layers and lower retinal vessel density. The design is cross-sectional, so it shows association, not cause. Bottom line: For a diabetic patient with advanced periodontitis, treat the gums and ask whether their yearly retinal check is up to date.",
+   "tr": "a",
+   "u": "https://medicaldialogues.in/amp/dentistry/news/severe-periodontitis-linked-to-retinal-degeneration-and-diabetic-retinopathy-risk-study-166571"
+  },
+  {
+   "id": "antibiotics-at-extraction-what-they-buy-what-the",
+   "addedAt": "2026-11-05T01:27:00Z",
+   "cat": "Oral surgery",
+   "ev": "Lodi G et al. · Cochrane Database Syst Rev 2021",
+   "head": "Antibiotics at extraction: what they buy, what they cost",
+   "journal": "Cochrane",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Antibiotics at extraction: what they buy, what they cost",
+   "take": "Cochrane review, mostly third molar surgery in healthy adults. Antibiotics reduced postoperative infection by about two-thirds (NNT 19) and dry socket by about a third (NNT 46). Adverse effects were mostly brief and minor, but each prescription adds to resistance. Bottom line: Treating 19 healthy patients to prevent one infection is a poor trade for routine extractions. Reserve antibiotics for higher-risk patients and difficult surgery.",
+   "tr": "a",
+   "u": "https://www.cochranelibrary.com/cdsr/doi/10.1002/14651858.CD003811.pub3/full",
+   "fig": {
+    "type": "stat",
+    "big": "NNT 19",
+    "lines": [
+     "healthy patients given antibiotics",
+     "to prevent one infection"
+    ],
+    "from": "Cochrane 2021",
+    "ch": "vial"
+   }
+  },
+  {
+   "id": "acute-dental-pain-nsaids-first-opioids-last",
+   "addedAt": "2026-11-05T01:10:00Z",
+   "cat": "Practice & policy",
+   "ev": "Carrasco-Labra A et al. · JADA 2024",
+   "head": "Acute dental pain: NSAIDs first, opioids last",
+   "journal": "JADA",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Acute dental pain: NSAIDs first, opioids last",
+   "take": "ADA guideline for adolescents (12 and over) and adults. NSAIDs alone, or combined with paracetamol (acetaminophen), are the first choice for pain after extraction and for toothache. Opioids are reserved for the rare case where these fail or are contraindicated. Bottom line: Ibuprofen with paracetamol relieves dental pain as well as opioid combinations, without the dependence risk.",
+   "tr": "a",
+   "u": "https://jada.ada.org/article/S0002-8177(23)00655-7/fulltext"
+  },
+  {
+   "id": "toothache-needs-treatment-not-an-antibiotic",
+   "addedAt": "2026-11-05T00:53:00Z",
+   "cat": "Endodontics",
+   "ev": "Lockhart PB et al. · JADA 2019",
+   "head": "Toothache needs treatment, not an antibiotic",
+   "journal": "JADA",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Toothache needs treatment, not an antibiotic",
+   "take": "ADA guideline for immunocompetent adults. No antibiotics for symptomatic irreversible pulpitis, or for pulp necrosis with apical periodontitis or a localised abscess. Antibiotics are for systemic involvement (fever, malaise, spreading swelling, lymphadenopathy) or when definitive treatment cannot be done. Bottom line: Pulpectomy, incision and drainage or extraction is the treatment. An antibiotic without them only delays it.",
+   "tr": "a",
+   "u": "https://jada.ada.org/article/S0002-8177(19)30616-4/fulltext"
+  },
+  {
+   "id": "endocarditis-prophylaxis-who-still-needs-it",
+   "addedAt": "2026-11-05T00:36:00Z",
+   "cat": "Practice & policy",
+   "ev": "Wilson WR et al. · Circulation 2021",
+   "head": "Endocarditis prophylaxis: who still needs it",
+   "journal": "Circulation",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Endocarditis prophylaxis: who still needs it",
+   "take": "Only the highest-risk patients: prosthetic valves or valve repair material, previous endocarditis, certain congenital heart disease, and cardiac transplant with valvulopathy. Only for procedures that manipulate the gingiva or periapical region, or perforate the mucosa. Amoxicillin 2 g orally, 30–60 minutes before. Clindamycin is no longer recommended. Bottom line: Rheumatic heart disease without a prosthetic valve, mitral valve prolapse or a stent does not need prophylaxis under this guidance. When unsure, ask the cardiologist.",
+   "tr": "a",
+   "u": "https://www.ahajournals.org/doi/10.1161/CIR.0000000000000969"
+  },
+  {
+   "id": "the-efp-four-step-treatment-of-periodontitis",
+   "addedAt": "2026-11-05T00:19:00Z",
+   "cat": "Periodontics",
+   "ev": "Sanz M et al. · J Clin Periodontol 2020",
+   "head": "The EFP four-step treatment of periodontitis",
+   "journal": "J Clin Perio",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "The EFP four-step treatment of periodontitis",
+   "take": "Step 1: oral hygiene instruction, risk factor control (stop smoking, control diabetes) and supragingival cleaning. Step 2: subgingival instrumentation. Systemic antibiotics are not routine; consider them only in specific young patients with severe disease. Step 3: re-evaluate, then treat residual pockets (4 mm or deeper with bleeding, or 6 mm or deeper). Step 4: supportive care every 3–12 months. Bottom line: The re-evaluation visit is what most practices skip. Book it before the patient leaves after step 2.",
+   "tr": "a",
+   "u": "https://onlinelibrary.wiley.com/doi/10.1111/jcpe.13290"
+  },
+  {
+   "id": "edentulous-mandible-two-implants-make-the-dentur",
+   "addedAt": "2026-11-05T00:02:00Z",
+   "cat": "Implants",
+   "ev": "Feine JS et al. · Gerodontology 2002",
+   "head": "Edentulous mandible: two implants make the denture",
+   "journal": "Gerodontol",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Edentulous mandible: two implants make the denture",
+   "take": "The McGill consensus statement made the two-implant overdenture the minimum standard of care for the edentulous mandible. It gives better retention, chewing and satisfaction than a conventional complete denture. Two implants cost far less than a fixed full-arch prosthesis. Bottom line: Offer it to every patient struggling with a lower denture. It is often the most cost-effective implant treatment in the practice.",
+   "tr": "a",
+   "u": "https://pubmed.ncbi.nlm.nih.gov/12164236/"
+  },
+  {
+   "id": "extraction-in-a-patient-on-bisphosphonates",
+   "addedAt": "2026-11-04T23:45:00Z",
+   "cat": "Oral surgery",
+   "ev": "Ruggiero SL et al. · J Oral Maxillofac Surg 2022",
+   "head": "Extraction in a patient on bisphosphonates",
+   "journal": "J Oral Max S",
+   "likes": 0,
+   "more": "Read the source",
+   "rib": "Extraction in a patient on bisphosphonates",
+   "take": "Medication-related osteonecrosis of the jaw (MRONJ) is far less common at osteoporosis doses than at the doses used for cancer. Before starting cancer-dose antiresorptives, complete dental treatment and let extraction sites heal. Evidence for stopping the drug before extraction (a 'drug holiday') remains limited. Talk to the prescribing physician. Bottom line: Do not refuse a needed extraction to an osteoporosis patient. Extract atraumatically, close primarily where possible, and review healing.",
+   "tr": "a",
+   "u": "https://www.joms.org/article/S0278-2391(22)00148-X/fulltext"
+  },
+  {
+   "id": "national-dental-commission-replaces-the-dci",
+   "addedAt": "2026-11-04T23:28:00Z",
+   "cat": "Practice & policy",
+   "ev": "News · Careers360 24 Mar 2026",
+   "head": "National Dental Commission replaces the DCI",
+   "journal": "News",
+   "likes": 0,
+   "more": "Read the news",
+   "rib": "National Dental Commission replaces the DCI",
+   "take": "The National Dental Commission Act, 2023 was notified in March 2026. Dental graduates will have to pass the National Exit Test (NExT) to practise. It is to be introduced within three years. State dental council heads will now be appointed by state governments, and the Commission can regulate fees for half the seats in private colleges. Bottom line: Registered practitioners keep their registration. Watch for the NExT schedule if you teach or employ new graduates.",
+   "tr": "a",
+   "u": "https://news.careers360.com/national-dental-commission-dci-cuts-state-council-role-next-exam-pvt-dentistry-college-bds-fees-control-elected-govt-appointees"
+  }
+ ]
+}
