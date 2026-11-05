@@ -378,7 +378,14 @@ button:focus-visible,a:focus-visible{outline:2px solid #5B8CFF;outline-offset:2p
 @keyframes ring{from{stroke-dashoffset:195}to{stroke-dashoffset:0}}
 .tabs{gap:14px}.tab{font-size:15.5px;max-width:none;overflow:visible}
 @media (max-width:440px){.pill{display:none}}
-.nb{padding:6px 12px}.nb-dz{white-space:nowrap;display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,#FF9B6B,#E8584A);color:#fff!important;border-radius:999px;padding:8px 14px;font:700 13px var(--f-body);box-shadow:0 6px 18px rgb(232 88 74 / .35)}
+.nb{padding:6px 12px}
+.ocbar{flex:0 0 auto;display:flex;align-items:center;gap:14px;margin:0 12px 10px;padding:12px 14px 12px 16px;background:#F5E7E3;border:1.5px solid #E6C3BA;border-radius:20px;text-align:left;cursor:pointer;font-family:var(--f-body)}
+.ocbar[hidden]{display:none}
+.ocbar .oc-i{width:30px;height:30px;color:#B4472F;flex:0 0 auto}
+.ocbar .oc-c{width:22px;height:22px;color:#B4472F;flex:0 0 auto;margin-left:auto}
+.ocbar .oc-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ocbar b{font-size:clamp(15px,4.3vw,17px);font-weight:800;color:#B4472F;line-height:1.2}
+.ocbar .oc-t span{font-size:clamp(13px,3.7vw,14.5px);color:#1E2A26;line-height:1.3}.nb-dz{white-space:nowrap;display:flex;align-items:center;gap:7px;background:linear-gradient(135deg,#FF9B6B,#E8584A);color:#fff!important;border-radius:999px;padding:8px 14px;font:700 13px var(--f-body);box-shadow:0 6px 18px rgb(232 88 74 / .35)}
 .nb-dz svg{width:20px!important;height:20px!important;fill:none!important}
 .quizcard .qz{position:relative;flex:1;min-height:0;overflow-y:auto;padding:4px 18px 18px;display:flex;flex-direction:column;gap:10px}
 .qz img{width:100%;max-height:34vh;object-fit:contain;background:#1E2A2A;border-radius:16px;display:block}
@@ -444,19 +451,19 @@ setTimeout(function(){var sp=document.getElementById('splash');if(sp&&!sp.hidden
   <div class="top">
     <div class="tabs" role="tablist">
       <button class="tab" id="tab-feed" role="tab" aria-selected="true" data-tab="feed">Feed</button>
-      <button class="tab" id="tab-onc" role="tab" aria-selected="false" data-tab="onc">Oral Cancer</button>
       <button class="tab" id="tab-saved" role="tab" aria-selected="false" data-tab="saved">Saved</button>
       <button class="tab" id="tab-read" role="tab" aria-selected="false" data-tab="read">Read</button>
     </div>
     <div class="tr"><button class="goal" id="goal" aria-label="Daily goal"><svg viewBox="0 0 28 28" aria-hidden="true"><circle class="ring-bg" cx="14" cy="14" r="11"/><circle class="ring-fg" cx="14" cy="14" r="11"/></svg><svg class="flame" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c1 4-3 5.5-3 9.5a3 3 0 0 0 6 0c0-1.2-.5-2.2-1-3 2.2 1.2 4.2 3.6 4.2 6.6A6.2 6.2 0 0 1 5.8 15C5.8 9.2 12 7.5 12 2z"/></svg><span class="sn">0</span></button><button class="pill" id="pill" tabindex="-1"></button></div>
   </div>
   <nav class="chips" id="chips" aria-label="Categories"></nav>
+  <button class="ocbar" id="ocbar" hidden data-dz="banner"><svg class="oc-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 2.8 19.5h18.4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="16.9" r="1.2" fill="currentColor"/></svg><span class="oc-t"><b>Noticed something unusual?</b><span>Discuss it privately with our oncology team</span></span><svg class="oc-c" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <main class="feed" id="feed"></main>
   <nav class="bottom" aria-label="Main">
     <button class="nb" id="nb-topics" aria-label="Search"><svg viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 0 1 6 12l4.2 4.2a1.3 1.3 0 0 1-1.8 1.8L14.7 16.8A7.5 7.5 0 1 1 10.5 3zm0 2.6a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8z"/></svg></button>
     <button class="nb" id="nb-home" aria-label="Feed" aria-current="true"><svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5V20a1.5 1.5 0 0 1-1.5 1.5H15V15a3 3 0 0 0-6 0v6.5H5.5A1.5 1.5 0 0 1 4 20z"/></svg></button>
-    <button class="nb nb-dz" id="nb-discuss" aria-label="Discuss a case with Dr Manish"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></svg><span>Discuss with Dr Manish</span></button>
     <button class="nb" id="nb-me" aria-label="Profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4.2"/><path d="M3.5 21c.6-4.4 4-7 8.5-7s7.9 2.6 8.5 7z"/></svg></button>
+    <button class="nb nb-dz" id="nb-discuss" aria-label="Oral Cancer Corner"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="11" cy="11" r="2" fill="currentColor"/></svg><span>Oral Cancer Corner</span></button>
   </nav>
 </div>
 <div class="onboard" id="acct" hidden></div>
@@ -795,6 +802,7 @@ function renderMore(n=BATCH){
 function wireDone(){const r=$('relook'), cn=$('checknew'); if(r) r.onclick=()=>loadOlder('done'); if(cn) cn.onclick=checkNew;}
 function render(scrollToFresh=true){
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===tab));
+  $('ocbar').hidden=tab!=='onc'; $('nb-discuss').setAttribute('aria-current',tab==='onc'); $('nb-home').setAttribute('aria-current',tab!=='onc');
   renderChips();
   pendingLive=0; renderedLive=liveCards.length;
   let start=0; items=[]; itemPos=0; feed.innerHTML='';
@@ -804,7 +812,7 @@ function render(scrollToFresh=true){
     items=list.map(c=>({k:'card',c}));
   } else if(tab==='onc'){
     const list=LIB.filter(c=>c.onc&&topicOk(c)&&!S.hidden[c.id]);
-    const tp=tipsForFeed(8); let ti=0, qi=0; const out=[{k:'discuss'}];
+    const tp=tipsForFeed(8); let ti=0, qi=0; const out=[];
     list.forEach((c,i)=>{out.push({k:'card',c}); if(i%3===1) out.push(ti<=qi?{k:'tip',t:tp[ti++]}:{k:'quiz',q:quizFor(qi++)});});
     items=out;
   } else if(tab==='read'){
@@ -890,7 +898,7 @@ function topics(){
 $('chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;topic=b.dataset.cat||null;tab='feed';render();});
 document.querySelector('.tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;tab=b.dataset.tab;render(tab==='feed');});
 $('pill').onclick=()=>{if(pendingLive>0)render();};
-$('nb-topics').onclick=searchSheet; $('nb-discuss').onclick=()=>discussSheet('nav'); $('nb-me').onclick=profile; $('nb-home').onclick=()=>{tab='feed';topic=null;render();};
+$('nb-topics').onclick=searchSheet; $('nb-discuss').onclick=()=>{tab='onc';topic=null;render();}; $('nb-me').onclick=profile; $('nb-home').onclick=()=>{tab='feed';topic=null;render();};
 feed.addEventListener('click',e=>{
   const card=e.target.closest('.card[data-id]'), a=e.target.closest('[data-a]'); if(!card||!a)return;
   if(a.dataset.a==='like') toggle('liked',card); else if(a.dataset.a==='save') toggle('saved',card); else if(a.dataset.a==='more') moreSheet(byId(card.dataset.id)); else share(byId(card.dataset.id));
