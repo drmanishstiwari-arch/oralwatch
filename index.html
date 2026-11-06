@@ -810,7 +810,7 @@ function feedList(){
 function nextDrop(){const off=5.5*3600e3,ist=Date.now()+off,d=new Date(ist),h=d.getUTCHours(),t=new Date(ist);t.setUTCHours(h-h%4,6,0,0);if(t.getTime()<=ist)t.setUTCHours(h-h%4+4,6,0,0);const ms=t.getTime()-ist,hh=Math.floor(ms/3600e3),mm=Math.floor(ms%3600e3/60e3);return hh?`${hh} h ${mm} min`:`${mm} min`;}
 const CAT_ORDER=['Early detection','Premalignancy','Biopsy','Normal variants','Before & after treatment','Periodontics','Endodontics','Orthodontics','Prosthodontics','Implants','Oral surgery','Paediatric dentistry','Practice & policy','About OralWatch'];
 function renderChips(){
-  const all=tab==='onc'?LIB.filter(c=>c.onc):[...liveCards,...LIB], n={};all.forEach(c=>n[c.cat]=(n[c.cat]||0)+1);
+  const all=tab==='onc'?[...liveCards,...LIB].filter(c=>c.onc):[...liveCards,...LIB], n={};all.forEach(c=>n[c.cat]=(n[c.cat]||0)+1);
   const cats=[...CAT_ORDER.filter(c=>n[c]),...Object.keys(n).filter(c=>!CAT_ORDER.includes(c)).sort()];
   $('chips').innerHTML=`<button class="chip" data-cat="" aria-pressed="${!topic}">All</button>`+cats.map(c=>`<button class="chip" data-cat="${esc(c)}" aria-pressed="${c===topic}">${esc(c)}</button>`).join('');
   const on=$('chips').querySelector('[aria-pressed="true"]');on&&on.scrollIntoView({inline:'center',block:'nearest'});
@@ -837,9 +837,9 @@ function doneHTML(n){
   return `<article class="card done" id="done-card"><div class="img">${s}</div>
    <div class="ribbon"><b>Done for today's knowledge ritual</b></div>
    <div class="body"><h2>You're all caught up</h2>
-   <p class="take">${topic?'You have seen every shot in '+esc(topic)+'.':'You have seen every shot.'} New papers and oncology news are added regularly. Pull down at the top, or tap below, to relook older cards, or pick another category above.</p>
+   <p class="take">${topic?'You have seen every card in '+esc(topic)+', and taken a second look.':'You have seen every card, and taken a second look.'} New cards are added every morning. Tap Load more cards to keep revising, or pick another category above.</p>
    <div class="cd" id="cd"></div>
-   <div class="row"><button class="btn ghost" id="relook">Load older cards</button><button class="btn primary" id="checknew">Check for new</button></div>
+   <div class="row"><button class="btn ghost" id="relook">Load more cards</button><button class="btn primary" id="checknew">Check for new</button></div>
    <button class="fb-link" data-invite="done">Invite a colleague to OralWatch</button>
    <button class="fb-link" data-fb="New topic" data-from="done">Want a topic covered? Write to Dr Manish</button></div></article>`;
 }
@@ -855,7 +855,7 @@ function renderMore(n=BATCH){
   feed.insertAdjacentHTML('beforeend',html); wireTips(); observe(); wireDone();
   return true;
 }
-function wireDone(){const r=$('relook'), cn=$('checknew'); if(r) r.onclick=()=>loadOlder('done'); if(cn) cn.onclick=checkNew;}
+function wireDone(){const r=$('relook'), cn=$('checknew'); if(r) r.onclick=()=>{T_('more-cards');render(false);toast('Here are more cards to revisit');}; if(cn) cn.onclick=checkNew;}
 function render(scrollToFresh=true){
   document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.tab===tab));
   $('ocbar').hidden=tab!=='onc'; $('nb-discuss').setAttribute('aria-current',tab==='onc'); $('nb-home').setAttribute('aria-current',tab!=='onc');
@@ -867,7 +867,7 @@ function render(scrollToFresh=true){
     if(!list.length) feed.innerHTML=`<div class="empty"><div><b>Nothing saved yet.</b><br>Tap the bookmark on any card to keep it here.</div></div>`;
     items=list.map(c=>({k:'card',c}));
   } else if(tab==='onc'){
-    const list=LIB.filter(c=>c.onc&&topicOk(c)&&!S.hidden[c.id]);
+    const list=[...liveCards.filter(c=>c.onc),...LIB].filter(c=>c.onc&&topicOk(c)&&!S.hidden[c.id]);
     const tp=tipsForFeed(8); let ti=0, qi=0; const out=[];
     list.forEach((c,i)=>{out.push({k:'card',c}); if(i%3===1) out.push(ti<=qi?{k:'tip',t:tp[ti++]}:{k:'quiz',q:quizFor(qi++)});});
     items=out;
@@ -879,6 +879,9 @@ function render(scrollToFresh=true){
     let {old,fresh}=feedList();
     if(!topic){const dn=fresh.filter(c=>!c.onc), on=fresh.filter(c=>c.onc);fresh=[];while(dn.length||on.length){fresh.push(...dn.splice(0,3));if(on.length)fresh.push(on.shift());}}
     doneN=old.length+fresh.length;
+    { const fs=new Set(fresh.map(c=>c.id)); let rv=old.filter(c=>!fs.has(c.id));
+      if(!topic){const dn=rv.filter(c=>!c.onc), on=rv.filter(c=>c.onc);rv=[];while(dn.length||on.length){rv.push(...dn.splice(0,3));if(on.length)rv.push(on.shift());}}
+      fresh=fresh.concat(rv.slice(0,150)); }
     const fh=fresh.map(c=>({k:'card',c})); if(!S.profile&&fh.length>6) fh.splice(6,0,{k:'join'});
     { // a calm Daily tips stop after every 10 swipes, in every feed
       const at=[];for(let p=5;p<fh.length;p+=6)at.push(p);
@@ -927,7 +930,7 @@ function observe(){
     if(e.isIntersecting&&el.id==='note-card') noteShown();
     if(e.isIntersecting&&el.id==='cde-card') cdeShown();
     if(!id)return;
-    if(e.isIntersecting){seenTimer[id]=setTimeout(()=>{if(!S.seen.includes(id)){S.seen.push(id);persist();updatePill();onSeen();setTimeout(maybeRate,1500);}},800);}
+    if(e.isIntersecting){seenTimer[id]=setTimeout(()=>{if(!S.seen.includes(id)){S.seen.push(id);persist();updatePill();onSeen();setTimeout(maybeRate,1500);}else if(S.seen[S.seen.length-1]!==id){S.seen.splice(S.seen.indexOf(id),1);S.seen.push(id);persist();}},800);}
     else clearTimeout(seenTimer[id]);
   }),{root:feed,threshold:.6});
   feed.querySelectorAll('.card:not([data-obs])').forEach(el=>{el.dataset.obs='1';io.observe(el);});
