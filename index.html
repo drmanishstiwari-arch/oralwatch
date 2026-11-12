@@ -1792,11 +1792,11 @@ function goalSheet(g,st){
   sh.querySelector('#gw-more').onclick=()=>{closeSheet();track('goal-more');if(!left){tab='read';render(false);}};
   sh.querySelector('#gw-done').onclick=()=>{closeSheet();track('goal-done');toast('Well done. See you tomorrow!');};
 }
-function onSeen(){
+/* Refill signal: when a registered reader has 50 or fewer unread live cards left, log one 'refill' row in the members sheet (once per library size) so the content pipeline adds 20 more cards. */ function maybeRefill(){try{const n=liveCards.length;if(!n||!S.profile||S.refillAt===n)return;const seen=new Set(S.seen),left=liveCards.filter(c=>!seen.has(c.id)).length;if(left>50)return;S.refillAt=n;persist();track('refill');sendSignup('refill');}catch(e){}} function onSeen(){
   const k=todayKey();S.days[k]=(S.days[k]||0)+1;persist();updateGoal();
   if(S.days[k]===S.goal){playChime();setTimeout(()=>goalSheet(S.goal,streak()),700);}
   syncSoon();
-  setTimeout(maybeA2HS,600);
+  setTimeout(maybeRefill,1700);setTimeout(maybeA2HS,600);
   setTimeout(maybeSaveTip,900);
 }
 function updateGoal(){
